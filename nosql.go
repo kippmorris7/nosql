@@ -8,6 +8,7 @@ import (
 	badgerV2 "github.com/smallstep/nosql/badger/v2"
 	"github.com/smallstep/nosql/bolt"
 	"github.com/smallstep/nosql/database"
+	"github.com/smallstep/nosql/dynamodb"
 	"github.com/smallstep/nosql/mysql"
 	"github.com/smallstep/nosql/postgresql"
 )
@@ -50,6 +51,8 @@ var (
 	MySQLDriver = "mysql"
 	// PostgreSQLDriver indicates the default PostgreSQL database.
 	PostgreSQLDriver = "postgresql"
+	// DynamoDBDriver indicates the default DynamoDB database.
+	DynamoDBDriver = "dynamodb"
 
 	// Badger FileLoadingMode
 
@@ -72,6 +75,8 @@ func New(driver, dataSourceName string, opt ...Option) (db database.DB, err erro
 		db = &mysql.DB{}
 	case PostgreSQLDriver:
 		db = &postgresql.DB{}
+	case DynamoDBDriver:
+		db = &dynamodb.DB{}
 	default:
 		return nil, errors.Errorf("%s database not supported", driver)
 	}
